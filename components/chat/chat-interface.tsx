@@ -41,7 +41,16 @@ export function ChatInterface() {
 
   // Auto-scroll
   React.useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      // Find the specific scroll viewport to prevent Safari from scrolling the entire page body
+      const viewport = messagesEndRef.current.closest('[data-slot="scroll-area-viewport"]');
+      if (viewport) {
+        viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'smooth' });
+      } else {
+        // Fallback
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   }, [messages]);
 
   // Extract citations from messages
