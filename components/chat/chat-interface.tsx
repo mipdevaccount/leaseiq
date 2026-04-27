@@ -10,6 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer';
 import { Send, FileText, Loader2, MessageSquare } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const SUGGESTED_QUESTIONS = [
   "Which leases expire in the next 18 months and have NO renewal options?",
@@ -115,8 +116,8 @@ export function ChatInterface() {
                     {m.role === 'user' ? (
                       <div className="whitespace-pre-wrap text-[15px]">{getText(m)}</div>
                     ) : (
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
-                        <ReactMarkdown>{getText(m)}</ReactMarkdown>
+                      <div className="prose prose-sm dark:prose-invert max-w-none prose-tables:border-collapse prose-td:border prose-td:border-muted prose-th:border prose-th:border-muted prose-th:bg-muted/50 prose-td:p-2 prose-th:p-2">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{getText(m)}</ReactMarkdown>
                       </div>
                     )}
                     {m.role === 'assistant' && citations.length > 0 && (
