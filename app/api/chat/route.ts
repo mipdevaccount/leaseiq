@@ -17,7 +17,13 @@ export async function POST(req: Request) {
       return new Response('Invalid request', { status: 400 });
     }
 
-    const query = latestMessage.content;
+    const query = latestMessage.content || 
+                  (latestMessage.parts && latestMessage.parts.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('')) || 
+                  '';
+
+    if (!query) {
+      return new Response('Empty query', { status: 400 });
+    }
     
     // Classify intent
     const intent = await classifyIntent(query);
@@ -53,12 +59,18 @@ export async function POST(req: Request) {
 
     const systemPromptWithContext = `${SYSTEM_PROMPT}\n\nCONTEXT:\n${contextString}`;
 
+    // Map messages to ensure they are CoreMessage compatible (streamText expects content, not parts)
+    const coreMessages = messages.map((m: any) => ({
+      role: m.role,
+      content: m.content || (m.parts ? m.parts.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('') : ''),
+    }));
+
     // Step 4: Stream response
     const result = streamText({
       model: openai(process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini'),
       messages: [
         { role: 'system', content: systemPromptWithContext },
-        ...messages,
+        ...coreMessages,
       ],
     });
 

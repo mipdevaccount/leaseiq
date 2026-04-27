@@ -26,11 +26,13 @@ export function ChatInterface() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
-    sendMessage(input);
+    // @ts-ignore
+    sendMessage({ role: 'user', parts: [{ type: 'text', text: input }] });
     setInput('');
   };
   const isLoading = status === 'submitted' || status === 'streaming';
-  const append = (msg: { role: 'user', content: string }) => sendMessage(msg.content);
+  // @ts-ignore
+  const append = (msg: { role: 'user', content: string }) => sendMessage({ role: 'user', parts: [{ type: 'text', text: msg.content }] });
   const [selectedLeaseId, setSelectedLeaseId] = React.useState<string | null>(null);
   const [leaseData, setLeaseData] = React.useState<any>(null);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
