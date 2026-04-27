@@ -98,7 +98,7 @@ export function ChatInterface() {
       {/* Center: Chat */}
       <div className="flex-1 flex flex-col min-w-0 bg-background relative">
         <ScrollArea className="flex-1 p-4">
-          <div className="max-w-3xl mx-auto space-y-6 pb-20 pt-4">
+          <div className="max-w-3xl mx-auto space-y-6 pb-36 pt-4">
             {messages.length === 0 && (
               <div className="text-center mt-20">
                 <h2 className="text-2xl font-bold tracking-tight mb-2">Lease Intelligence</h2>
