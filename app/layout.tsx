@@ -39,7 +39,7 @@ export default function RootLayout({
               <div className="flex items-center gap-6">
                 <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight hover:opacity-80 transition-opacity">
                   <Building2 className="h-5 w-5 text-primary" />
-                  <span>Choice Properties <span className="text-muted-foreground font-normal">· Lease Intelligence</span></span>
+                  <span>LeaseIQ <span className="text-muted-foreground font-normal">Powered by Project X</span></span>
                 </Link>
                 <nav className="hidden md:flex items-center gap-4 text-sm font-medium text-muted-foreground">
                   <Link href="/" className="hover:text-foreground transition-colors">Chat</Link>

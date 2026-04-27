@@ -12,6 +12,8 @@ import { Send, FileText, Loader2, MessageSquare } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+import Image from 'next/image';
+
 const SUGGESTED_QUESTIONS = [
   "Which leases expire in the next 18 months and have NO renewal options?",
   "List all Loblaw banner anchor leases in Ontario with rent step-ups in 2027 or 2028.",
@@ -79,7 +81,7 @@ export function ChatInterface() {
   return (
     <div className="flex h-[calc(100vh-3.5rem)] overflow-hidden">
       {/* Left Rail: Suggestions */}
-      <div className="hidden lg:flex w-64 flex-col border-r bg-muted/20 p-4 space-y-6 overflow-y-auto">
+      <div className="hidden lg:flex w-64 flex-col border-r bg-muted/20 p-4 space-y-6 overflow-y-auto justify-between">
         <div>
           <h3 className="font-semibold text-sm tracking-tight mb-3 flex items-center gap-2">
             <MessageSquare className="w-4 h-4" />
@@ -96,6 +98,16 @@ export function ChatInterface() {
               </button>
             ))}
           </div>
+        </div>
+        
+        <div className="mt-auto pt-6 opacity-70 hover:opacity-100 transition-opacity">
+          <Image 
+            src="/project-x-ltd.png" 
+            alt="Project X Logo" 
+            width={120} 
+            height={40} 
+            className="w-24 h-auto dark:invert"
+          />
         </div>
       </div>
 
