@@ -41,16 +41,10 @@ export function ChatInterface() {
 
   // Auto-scroll
   React.useEffect(() => {
-    if (messagesEndRef.current) {
-      // Find the specific scroll viewport to prevent Safari from scrolling the entire page body
-      const viewport = messagesEndRef.current.closest('[data-slot="scroll-area-viewport"]');
-      if (viewport) {
-        // Use auto instead of smooth to prevent the animation from freezing during fast streaming
-        viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'auto' });
-      } else {
-        // Fallback
-        messagesEndRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
-      }
+    const viewport = document.getElementById('chat-scroll-viewport');
+    if (viewport) {
+      // 100% bulletproof native scrolling
+      viewport.scrollTop = viewport.scrollHeight;
     }
   }, [messages]);
 
@@ -107,7 +101,7 @@ export function ChatInterface() {
 
       {/* Center: Chat */}
       <div className="flex-1 flex flex-col min-w-0 bg-background relative">
-        <ScrollArea className="flex-1 p-4">
+        <div id="chat-scroll-viewport" className="flex-1 overflow-y-auto p-4">
           <div className="max-w-3xl mx-auto space-y-6 pt-4">
             {messages.length === 0 && (
               <div className="text-center mt-20">
@@ -160,7 +154,7 @@ export function ChatInterface() {
             )}
             <div ref={messagesEndRef} className="h-32 shrink-0" />
           </div>
-        </ScrollArea>
+        </div>
 
         {/* Input Form */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background/95 to-transparent">
