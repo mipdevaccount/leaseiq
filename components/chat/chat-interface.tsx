@@ -26,13 +26,11 @@ export function ChatInterface() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
-    // @ts-ignore
-    sendMessage({ role: 'user', content: input });
+    sendMessage(input);
     setInput('');
   };
   const isLoading = status === 'submitted' || status === 'streaming';
-  // @ts-ignore
-  const append = (msg: { role: 'user', content: string }) => sendMessage(msg);
+  const append = (msg: { role: 'user', content: string }) => sendMessage(msg.content);
   const [selectedLeaseId, setSelectedLeaseId] = React.useState<string | null>(null);
   const [leaseData, setLeaseData] = React.useState<any>(null);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -112,9 +110,13 @@ export function ChatInterface() {
               return (
                 <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] rounded-2xl px-5 py-4 ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted/40 border'}`}>
-                    <div className="prose prose-sm dark:prose-invert max-w-none">
-                      <ReactMarkdown>{getText(m)}</ReactMarkdown>
-                    </div>
+                    {m.role === 'user' ? (
+                      <div className="whitespace-pre-wrap text-[15px]">{getText(m)}</div>
+                    ) : (
+                      <div className="prose prose-sm dark:prose-invert max-w-none">
+                        <ReactMarkdown>{getText(m)}</ReactMarkdown>
+                      </div>
+                    )}
                     {m.role === 'assistant' && citations.length > 0 && (
                       <div className="mt-4 pt-3 border-t flex flex-wrap gap-2">
                         {citations.map(c => (
