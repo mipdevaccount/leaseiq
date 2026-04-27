@@ -45,10 +45,11 @@ export function ChatInterface() {
       // Find the specific scroll viewport to prevent Safari from scrolling the entire page body
       const viewport = messagesEndRef.current.closest('[data-slot="scroll-area-viewport"]');
       if (viewport) {
-        viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'smooth' });
+        // Use auto instead of smooth to prevent the animation from freezing during fast streaming
+        viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'auto' });
       } else {
         // Fallback
-        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        messagesEndRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
       }
     }
   }, [messages]);
