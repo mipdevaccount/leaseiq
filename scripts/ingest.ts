@@ -5,10 +5,11 @@ import OpenAI from 'openai';
 import dotenv from 'dotenv';
 
 // Load env vars
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
+dotenv.config(); // Load .env
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') }); // Also load .env.local
 
 if (!process.env.OPENAI_API_KEY) {
-  console.error("OPENAI_API_KEY is not set in .env.local");
+  console.error("OPENAI_API_KEY is not set in .env or .env.local");
   process.exit(1);
 }
 
@@ -16,7 +17,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const CSV_PATH = path.join(process.cwd(), 'data', 'choice_properties_synthetic_leases.csv');
+const CSV_PATH = path.join(process.cwd(), 'ontario_leases_v2.csv');
 const LEASES_OUT_PATH = path.join(process.cwd(), 'data', 'leases.json');
 const EMBEDDINGS_OUT_PATH = path.join(process.cwd(), 'data', 'embeddings.json');
 
